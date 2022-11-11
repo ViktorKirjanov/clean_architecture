@@ -1,4 +1,4 @@
-# clean_architecture
+# Learning clean architecture
 
 A new Flutter project.
 
