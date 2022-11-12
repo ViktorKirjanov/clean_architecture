@@ -13,6 +13,7 @@ class MockLocalDataSource extends Mock implements NumberTriviaLocalDataSource {}
 class MockNetworkInfo extends Mock implements NetworkInfo {}
 
 void main() {
+  // ignore: unused_local_variable
   late NumberTriviaRepositoryImpl repository;
   late MockRemoteDataSource mockRemoteDataSource;
   late MockLocalDataSource mockLocalDataSource;
