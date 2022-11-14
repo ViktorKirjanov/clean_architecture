@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
-import '../../../../core/platform/network/network_info.dart';
+import '../../../../core/network/network_info.dart';
 import '../../domain/entities/number_trivia.dart';
 import '../../domain/repositories/number_trivia_repository.dart';
 import '../datasources/number_trivia_local_data_source.dart';
@@ -23,17 +23,16 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
   });
 
   @override
-  @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
       int number) async {
     return await _getTrivia(
-        () => remoteDataSource.getConcreteNumberTrivia(number)!);
+        () => remoteDataSource.getConcreteNumberTrivia(number));
   }
 
   @override
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async {
     return await _getTrivia(
-      () => remoteDataSource.getRandomNumberTrivia()!,
+      () => remoteDataSource.getRandomNumberTrivia(),
     );
   }
 
@@ -41,9 +40,6 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
     _ConcreteOrRandomChooser getConcreteOrRandom,
   ) async {
     final isConnected = await networkInfo.isConnected;
-    if (isConnected == null) {
-      return Left(ServerFailure());
-    }
 
     if (isConnected) {
       try {
@@ -56,7 +52,7 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
     } else {
       try {
         final localTrivia = await localDataSource.getLastNumberTrivia();
-        return Right(localTrivia!);
+        return Right(localTrivia);
       } on CacheException {
         return Left(CacheFailure());
       }
