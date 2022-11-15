@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'injection_container.dart' as di;
+import 'dependency_injection.dart' as di;
 
 Future<void> main() async {
   await di.init();
