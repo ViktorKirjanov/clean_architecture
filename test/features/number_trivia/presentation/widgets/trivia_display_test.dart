@@ -9,17 +9,19 @@ void main() {
   const String triviaText = 'Lorem ipsum text';
 
   testWidgets('TriviaButton', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: TriviaDisplay(
-          key: triviaDisplayKey,
-          trivia: NumberTrivia(
-            number: triviaNumber,
-            text: triviaText,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: TriviaDisplay(
+            key: triviaDisplayKey,
+            trivia: NumberTrivia(
+              number: triviaNumber,
+              text: triviaText,
+            ),
           ),
         ),
       ),
-    ));
+    );
 
     expect(find.byKey(triviaDisplayKey), findsOneWidget);
     expect(find.text(triviaNumber.toString()), findsOneWidget);

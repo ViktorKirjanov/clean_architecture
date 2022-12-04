@@ -1,42 +1,39 @@
+import 'package:clean_architecture/core/errors/exceptions.dart';
+import 'package:clean_architecture/core/errors/failures.dart';
+import 'package:clean_architecture/core/network/network_info.dart';
+import 'package:clean_architecture/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
+import 'package:clean_architecture/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
+import 'package:clean_architecture/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:clean_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failures.dart';
-import '../../../../core/network/network_info.dart';
-import '../../domain/entities/number_trivia.dart';
-import '../../domain/repositories/number_trivia_repository.dart';
-import '../datasources/number_trivia_local_data_source.dart';
-import '../datasources/number_trivia_remote_data_source.dart';
 
 typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel> Function();
 
 class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
-  final NumberTriviaRemoteDataSource remoteDataSource;
-  final NumberTriviaLocalDataSource localDataSource;
-  final NetworkInfo networkInfo;
-
   NumberTriviaRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
   });
 
+  final NumberTriviaRemoteDataSource remoteDataSource;
+  final NumberTriviaLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
+
   @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
     int number,
-  ) async {
-    return await _getTrivia(
-      () => remoteDataSource.getConcreteNumberTrivia(number),
-    );
-  }
+  ) async =>
+      _getTrivia(
+        () => remoteDataSource.getConcreteNumberTrivia(number),
+      );
 
   @override
-  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async {
-    return await _getTrivia(
-      () => remoteDataSource.getRandomNumberTrivia(),
-    );
-  }
+  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async =>
+      _getTrivia(
+        remoteDataSource.getRandomNumberTrivia,
+      );
 
   Future<Either<Failure, NumberTrivia>> _getTrivia(
     _ConcreteOrRandomChooser getConcreteOrRandom,

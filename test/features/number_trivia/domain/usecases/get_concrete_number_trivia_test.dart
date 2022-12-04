@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
 import 'package:clean_architecture/core/errors/failures.dart';
 import 'package:clean_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:clean_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';

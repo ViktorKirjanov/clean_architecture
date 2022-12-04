@@ -7,14 +7,16 @@ void main() {
   const searchTrivia = '123';
 
   testWidgets('TriviaTextField', (tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: TriviaTextField(
-          key: triviaTextFieldKey,
-          controller: TextEditingController(),
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: TriviaTextField(
+            key: triviaTextFieldKey,
+            controller: TextEditingController(),
+          ),
         ),
       ),
-    ));
+    );
 
     final finder = find.byKey(triviaTextFieldKey);
 

@@ -23,8 +23,9 @@ void main() {
   });
 
   group('getLastNumberTrivia', () {
-    final tNumberTriviaModel =
-        NumberTriviaModel.fromJson(json.decode(fixture('trivia_cached.json')));
+    final tNumberTriviaModel = NumberTriviaModel.fromJson(
+      json.decode(fixture('trivia_cached.json')) as Map<String, dynamic>,
+    );
 
     test(
       'should return NumberTrivia from SharedPreferences when there is one in the cache',
@@ -48,7 +49,7 @@ void main() {
         // act
         final call = dataSource.getLastNumberTrivia;
         // assert
-        expect(() => call(), throwsA(const TypeMatcher<CacheException>()));
+        expect(call, throwsA(const TypeMatcher<CacheException>()));
       },
     );
   });
@@ -64,13 +65,15 @@ void main() {
         when(() => mockSharedPreferences.setString(any(), any()))
             .thenAnswer((_) async => true);
         // act
-        dataSource.cacheNumberTrivia(tNumberTriviaModel);
+        await dataSource.cacheNumberTrivia(tNumberTriviaModel);
         // assert
         final expectedJsonString = json.encode(tNumberTriviaModel.toJson());
-        verify(() => mockSharedPreferences.setString(
-              cachedNumberTrivia,
-              expectedJsonString,
-            ));
+        verify(
+          () => mockSharedPreferences.setString(
+            cachedNumberTrivia,
+            expectedJsonString,
+          ),
+        );
       },
     );
   });

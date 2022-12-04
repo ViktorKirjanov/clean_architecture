@@ -6,13 +6,15 @@ void main() {
   const loadingIndicatorKey = Key('loadingIndicatorKey');
 
   testWidgets('LoadingIndicator', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: LoadingIndicator(
-          key: loadingIndicatorKey,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: LoadingIndicator(
+            key: loadingIndicatorKey,
+          ),
         ),
       ),
-    ));
+    );
 
     expect(find.byKey(loadingIndicatorKey), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
