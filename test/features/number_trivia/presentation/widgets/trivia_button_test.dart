@@ -7,15 +7,17 @@ void main() {
   const title = 'Search';
 
   testWidgets('TriviaButton', (tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: TriviaButton(
-          key: triviaButtonKey,
-          title: title,
-          onPressed: () {},
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: TriviaButton(
+            key: triviaButtonKey,
+            title: title,
+            onPressed: () {},
+          ),
         ),
       ),
-    ));
+    );
 
     expect(find.byKey(triviaButtonKey), findsOneWidget);
     expect(find.byType(TextButton), findsOneWidget);

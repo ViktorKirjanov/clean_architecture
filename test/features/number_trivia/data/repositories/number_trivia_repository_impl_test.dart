@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_instance_creation
+
 import 'package:clean_architecture/core/errors/exceptions.dart';
 import 'package:clean_architecture/core/errors/failures.dart';
 import 'package:clean_architecture/core/network/network_info.dart';
@@ -34,7 +36,7 @@ void main() {
     );
   });
 
-  void runTestsOnline(Function body) {
+  void runTestsOnline(void Function() body) {
     group('device is online', () {
       setUp(() {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -43,7 +45,7 @@ void main() {
     });
   }
 
-  void runTestsOffline(Function body) {
+  void runTestsOffline(void Function() body) {
     group('device is offline', () {
       setUp(() {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
@@ -91,7 +93,10 @@ void main() {
           final result = await repository.getConcreteNumberTrivia(tNumber);
           // assert
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
-          expect(result, equals(const Right(tNumberTrivia)));
+          expect(
+            result,
+            equals(const Right(tNumberTrivia)),
+          );
         },
       );
 
@@ -108,7 +113,8 @@ void main() {
           // assert
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
           verify(
-              () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
+            () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel),
+          );
         },
       );
 
@@ -218,7 +224,8 @@ void main() {
           // assert
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
           verify(
-              () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
+            () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel),
+          );
         },
       );
 

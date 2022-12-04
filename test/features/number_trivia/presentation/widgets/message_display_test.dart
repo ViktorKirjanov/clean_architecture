@@ -7,14 +7,16 @@ void main() {
   const message = 'Lorem ipsum';
 
   testWidgets('MessageDisplay', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: MessageDisplay(
-          key: messageDisplayKey,
-          message: message,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: MessageDisplay(
+            key: messageDisplayKey,
+            message: message,
+          ),
         ),
       ),
-    ));
+    );
 
     expect(find.byKey(messageDisplayKey), findsOneWidget);
     expect(find.text(message), findsOneWidget);

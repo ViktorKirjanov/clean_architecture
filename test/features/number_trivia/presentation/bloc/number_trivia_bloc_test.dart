@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_implementing_value_types
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:clean_architecture/core/errors/failures.dart';
@@ -36,13 +36,11 @@ void main() {
     mockInputConverter = MockInputConverter();
   });
 
-  NumberTriviaBloc buildBloc() {
-    return NumberTriviaBloc(
-      concrete: mockGetConcreteNumberTrivia,
-      random: mockGetRandomNumberTrivia,
-      inputConverter: mockInputConverter,
-    );
-  }
+  NumberTriviaBloc buildBloc() => NumberTriviaBloc(
+        concrete: mockGetConcreteNumberTrivia,
+        random: mockGetRandomNumberTrivia,
+        inputConverter: mockInputConverter,
+      );
 
   test('works properly', () {
     expect(buildBloc, returnsNormally);
@@ -169,7 +167,7 @@ void main() {
 
     blocTest<NumberTriviaBloc, NumberTriviaState>(
       'should get data from the random use case',
-      setUp: () => setUpMockGetRandomTriviaSuccess(),
+      setUp: setUpMockGetRandomTriviaSuccess,
       build: buildBloc,
       act: (bloc) async => bloc.add(GetRandomTrivia()),
       verify: (_) => verify(
@@ -179,7 +177,7 @@ void main() {
 
     blocTest<NumberTriviaBloc, NumberTriviaState>(
       'should emit [Loading, Loaded] when data is gotten successfully',
-      setUp: () => setUpMockGetRandomTriviaSuccess(),
+      setUp: setUpMockGetRandomTriviaSuccess,
       build: buildBloc,
       act: (bloc) async => bloc.add(GetRandomTrivia()),
       expect: () => [

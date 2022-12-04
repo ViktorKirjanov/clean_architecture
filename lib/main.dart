@@ -1,6 +1,6 @@
+import 'package:clean_architecture/dependency_injection.dart' as di;
+import 'package:clean_architecture/features/number_trivia/presentation/pages/number_trivia_page.dart';
 import 'package:flutter/material.dart';
-import 'dependency_injection.dart' as di;
-import 'features/number_trivia/presentation/pages/number_trivia_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,13 +13,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Clear Achecture',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const NumberTriviaPage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Flutter Clear Achecture',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const NumberTriviaPage(),
+      );
 }

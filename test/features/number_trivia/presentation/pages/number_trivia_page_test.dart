@@ -35,9 +35,7 @@ void main() {
     late MockGetRandomNumberTrivia mockGetRandomNumberTrivia;
     late MockInputConverter mockInputConverter;
 
-    final getIt = GetIt.instance;
-
-    getIt.registerFactory(
+    GetIt.instance.registerFactory(
       () => NumberTriviaBloc(
         concrete: mockGetConcreteNumberTrivia,
         inputConverter: mockInputConverter,
@@ -142,13 +140,17 @@ void main() {
       testWidgets(
         'should get trivia from the usecase',
         (WidgetTester tester) async {
-          when(() => mockGetConcreteNumberTrivia.call
-              .call(const Params(number: tNumber))).thenAnswer(
+          when(
+            () => mockGetConcreteNumberTrivia.call
+                .call(const Params(number: tNumber)),
+          ).thenAnswer(
             (_) async => const Right(tNumberTrivia),
           );
 
-          when(() => mockInputConverter.stringToUnsignedInteger(
-              tNumber.toString())).thenReturn(const Right(tNumber));
+          when(
+            () =>
+                mockInputConverter.stringToUnsignedInteger(tNumber.toString()),
+          ).thenReturn(const Right(tNumber));
 
           await tester.pumpWidget(
             const MaterialApp(
@@ -170,13 +172,17 @@ void main() {
       testWidgets(
         'should get ServerFailure from the usecase',
         (WidgetTester tester) async {
-          when(() => mockGetConcreteNumberTrivia
-              .call(const Params(number: tNumber))).thenAnswer(
+          when(
+            () =>
+                mockGetConcreteNumberTrivia.call(const Params(number: tNumber)),
+          ).thenAnswer(
             (_) async => Left(ServerFailure()),
           );
 
-          when(() => mockInputConverter.stringToUnsignedInteger(
-              tNumber.toString())).thenReturn(const Right(tNumber));
+          when(
+            () =>
+                mockInputConverter.stringToUnsignedInteger(tNumber.toString()),
+          ).thenReturn(const Right(tNumber));
 
           await tester.pumpWidget(
             const MaterialApp(
@@ -196,13 +202,17 @@ void main() {
       testWidgets(
         'should get CacheFailure from the usecase',
         (WidgetTester tester) async {
-          when(() => mockGetConcreteNumberTrivia
-              .call(const Params(number: tNumber))).thenAnswer(
+          when(
+            () =>
+                mockGetConcreteNumberTrivia.call(const Params(number: tNumber)),
+          ).thenAnswer(
             (_) async => Left(CacheFailure()),
           );
 
-          when(() => mockInputConverter.stringToUnsignedInteger(
-              tNumber.toString())).thenReturn(const Right(tNumber));
+          when(
+            () =>
+                mockInputConverter.stringToUnsignedInteger(tNumber.toString()),
+          ).thenReturn(const Right(tNumber));
 
           await tester.pumpWidget(
             const MaterialApp(

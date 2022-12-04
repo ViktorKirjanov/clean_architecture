@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:clean_architecture/core/errors/exceptions.dart';
+import 'package:clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../core/errors/exceptions.dart';
-import '../models/number_trivia_model.dart';
 
 abstract class NumberTriviaLocalDataSource {
   /// Gets the cached [NumberTriviaModel] which was gotten the last time
@@ -18,25 +17,28 @@ abstract class NumberTriviaLocalDataSource {
 const cachedNumberTrivia = 'CACHED_NUMBER_TRIVIA';
 
 class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
-  final SharedPreferences sharedPreferences;
-
   NumberTriviaLocalDataSourceImpl({required this.sharedPreferences});
+
+  final SharedPreferences sharedPreferences;
 
   @override
   Future<NumberTriviaModel> getLastNumberTrivia() {
-    String? jsonString = sharedPreferences.getString(cachedNumberTrivia);
+    final String? jsonString = sharedPreferences.getString(cachedNumberTrivia);
     if (jsonString != null) {
-      return Future.value(NumberTriviaModel.fromJson(jsonDecode(jsonString)));
+      return Future.value(
+        NumberTriviaModel.fromJson(
+          jsonDecode(jsonString) as Map<String, dynamic>,
+        ),
+      );
     } else {
       throw CacheException();
     }
   }
 
   @override
-  Future<void> cacheNumberTrivia(NumberTriviaModel triviaToCache) {
-    return sharedPreferences.setString(
-      cachedNumberTrivia,
-      jsonEncode(triviaToCache.toJson()),
-    );
-  }
+  Future<void> cacheNumberTrivia(NumberTriviaModel triviaToCache) =>
+      sharedPreferences.setString(
+        cachedNumberTrivia,
+        jsonEncode(triviaToCache.toJson()),
+      );
 }

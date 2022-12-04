@@ -12,18 +12,18 @@ class Empty extends NumberTriviaState {}
 class Loading extends NumberTriviaState {}
 
 class Loaded extends NumberTriviaState {
-  final NumberTrivia trivia;
-
   const Loaded({required this.trivia});
+
+  final NumberTrivia trivia;
 
   @override
   List<Object> get props => [trivia];
 }
 
 class Error extends NumberTriviaState {
-  final String message;
-
   const Error({required this.message});
+
+  final String message;
 
   @override
   List<Object> get props => [message];
